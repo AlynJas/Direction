@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asking and Giving Directions - Role Play</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <!-- Babel -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Prompt:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+            /* พื้นหลังไล่สีสไตล์ท้องฟ้าและสวน */
+            background: linear-gradient(to bottom, #e0f2fe 0%, #bbf7d0 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .title-font {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* สไตล์ปุ่มไม้ */
+        .wood-button {
+            background-color: #fef3c7; /* สีเนื้อไม้ */
+            border: 6px solid #78350f; /* ขอบสีน้ำตาลเข้ม */
+            color: #451a03;
+            box-shadow: 0 8px 0 #451a03, 0 15px 20px rgba(0,0,0,0.2);
+            transition: all 0.15s ease;
+            position: relative;
+        }
+        .wood-button:active {
+            transform: translateY(8px);
+            box-shadow: 0 0px 0 #451a03, 0 5px 10px rgba(0,0,0,0.2);
+        }
+        .wood-button:hover {
+            background-color: #fde68a;
+        }
+
+        /* หมุดติดปุ่มไม้ */
+        .pin {
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle at 30% 30%, #9ca3af, #4b5563);
+            border-radius: 50%;
+            box-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        /* ตกแต่งด้วยธรรมชาติ (Emoji) */
+        .nature-decor {
+            position: absolute;
+            font-size: 4rem;
+            z-index: -1;
+            opacity: 0.8;
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1));
+        }
+
+        /* Card Animation */
+        .fade-in {
+            animation: fadeInScale 0.4s ease-out forwards;
+        }
+        @keyframes fadeInScale {
+            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const situations = [
+            {
+                id: 1,
+                pattern: "How do I get to...?",
+                studentA: { start: "Hospital", target: "Cinema", text: "Excuse me, how do I get to the Cinema from the Hospital?" },
+                studentB: { text: "Go straight and cross the street. It is next to the Museum." }
+            },
+            {
+                id: 2,
+                pattern: "Could you tell me the way to...?",
+                studentA: { start: "Book Shop", target: "Library", text: "Could you tell me the way to the Library from the Book Shop, please?" },
+                studentB: { text: "Go straight to the intersection and cross the street. The Library is opposite the Book Shop." }
+            },
+            {
+                id: 3,
+                pattern: "Is there a... near here?",
+                studentA: { start: "School", target: "Toys shop", text: "Excuse me, is there a toys shop near here?" },
+                studentB: { text: "Yes. Walk behind the school. It is next to the Hospital and the Petshop." }
+            },
+            {
+                id: 4,
+                pattern: "How do I get to...?",
+                studentA: { start: "Train Station", target: "Restaurant", text: "Excuse me, how do I get to the Restaurant from the Train Station?" },
+                studentB: { text: "Go straight up the road. It is next to the Stadium." }
+            },
+            {
+                id: 5,
+                pattern: "Could you tell me the way to...?",
+                studentA: { start: "Police Station", target: "Bank", text: "Could you tell me the way to the Bank from the Police Station, please?" },
+                studentB: { text: "Go straight. It is next to the Police Station." }
+            },
+            {
+                id: 6,
+                pattern: "Is there a... near here?",
+                studentA: { start: "Shopping Mall", target: "Coffee shop", text: "Excuse me, is there a coffee shop near here?" },
+                studentB: { text: "Yes. Go straight and turn right at the roundabout. It is next to the Book Shop." }
+            },
+            {
+                id: 7,
+                pattern: "How do I get to...?",
+                studentA: { start: "Bank", target: "Museum", text: "Excuse me, how do I get to the Museum from the Bank?" },
+                studentB: { text: "Go straight and turn left at the roundabout. It is between the Shopping Mall and the Cinema." }
+            },
+            {
+                id: 8,
+                pattern: "Could you tell me the way to...?",
+                studentA: { start: "Petshop", target: "Pizza shop", text: "Could you tell me the way to the Pizza shop from the Petshop, please?" },
+                studentB: { text: "Go straight down and cross the street. It is between the School and the Library." }
+            },
+            {
+                id: 9,
+                pattern: "Is there a... near here?",
+                studentA: { start: "Airport", target: "Hotel", text: "Excuse me, is there a hotel near here?" },
+                studentB: { text: "Yes. Walk straight up. It is next to the Train Station." }
+            },
+            {
+                id: 10,
+                pattern: "How do I get to...?",
+                studentA: { start: "Restaurant", target: "Eiffel Tower", text: "Excuse me, how do I get to the Eiffel Tower from the Restaurant?" },
+                studentB: { text: "Go straight and turn left at the roundabout. Go straight again. It is next to the Police Station." }
+            }
+        ];
+
+        const App = () => {
+            const [selectedQuestion, setSelectedQuestion] = React.useState(null);
+
+            const handleSelect = (id) => {
+                const q = situations.find(s => s.id === id);
+                setSelectedQuestion(q);
+            };
+
+            const handleBack = () => {
+                setSelectedQuestion(null);
+            };
+
+            return (
+                <div className="min-h-screen relative flex flex-col items-center justify-center p-6">
+                    {/* ของตกแต่งพื้นหลัง */}
+                    <div className="nature-decor top-10 left-10">🌳</div>
+                    <div className="nature-decor bottom-10 right-10">🌸</div>
+                    <div className="nature-decor top-20 right-20">🌿</div>
+                    <div className="nature-decor bottom-20 left-20">🪴</div>
+
+                    {/* หน้าเมนูหลัก */}
+                    {!selectedQuestion && (
+                        <div className="max-w-5xl w-full text-center fade-in">
+                            <h1 className="title-font text-3xl md:text-5xl font-bold text-slate-800 mb-4 leading-tight">
+                                Read the situations carefully and understand <br className="hidden md:block" />
+                                each question before answering.
+                            </h1>
+                            <p className="text-slate-600 mb-12 text-lg font-medium">Pair Work Activity: Asking and Giving Directions</p>
+
+                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 md:gap-10 max-w-4xl mx-auto px-4">
+                                {situations.map((item) => (
+                                    <button
+                                        key={item.id}
+                                        onClick={() => handleSelect(item.id)}
+                                        className="wood-button w-24 h-24 md:w-32 md:h-32 rounded-full flex items-center justify-center text-5xl md:text-6xl font-black title-font mx-auto"
+                                    >
+                                        <div className="pin"></div>
+                                        {item.id}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* หน้าแสดงคำถาม (Card) */}
+                    {selectedQuestion && (
+                        <div className="w-full max-w-4xl bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl p-8 md:p-12 fade-in relative border-4 border-slate-100">
+                            
+                            <div className="absolute -top-6 -left-6 w-16 h-16 bg-blue-500 text-white rounded-full flex items-center justify-center text-3xl font-bold shadow-lg title-font">
+                                {selectedQuestion.id}
+                            </div>
+
+                            <div className="text-center mb-8 border-b-2 border-slate-200 pb-6">
+                                <span className="inline-block bg-blue-100 text-blue-800 px-4 py-1 rounded-full text-sm font-semibold tracking-wide mb-2 uppercase">
+                                    Pattern: {selectedQuestion.pattern}
+                                </span>
+                                <h2 className="text-2xl font-bold text-slate-700 mt-2">
+                                    Start: <span className="text-blue-600">{selectedQuestion.studentA.start}</span> 
+                                    <span className="mx-3 text-slate-400">➔</span> 
+                                    Target: <span className="text-green-600">{selectedQuestion.studentA.target}</span>
+                                </h2>
+                            </div>
+
+                            <div className="grid md:grid-cols-2 gap-8">
+                                {/* Student A */}
+                                <div className="bg-blue-50 rounded-2xl p-6 border-2 border-blue-200 shadow-sm relative">
+                                    <div className="absolute -top-4 left-6 bg-blue-500 text-white px-4 py-1 rounded-lg font-bold">
+                                        👨‍🎓 Student A (Tourist)
+                                    </div>
+                                    <div className="mt-4 text-xl md:text-2xl text-slate-800 font-medium leading-relaxed">
+                                        "{selectedQuestion.studentA.text}"
+                                    </div>
+                                    <p className="text-sm text-blue-600 mt-4 font-semibold">
+                                        * You are at the {selectedQuestion.studentA.start}
+                                    </p>
+                                </div>
+
+                                {/* Student B */}
+                                <div className="bg-green-50 rounded-2xl p-6 border-2 border-green-200 shadow-sm relative">
+                                    <div className="absolute -top-4 left-6 bg-green-500 text-white px-4 py-1 rounded-lg font-bold">
+                                        👩‍🌾 Student B (Local)
+                                    </div>
+                                    <div className="mt-4 text-xl md:text-2xl text-slate-800 font-medium leading-relaxed">
+                                        "{selectedQuestion.studentB.text}"
+                                    </div>
+                                    <p className="text-sm text-green-600 mt-4 font-semibold">
+                                        * Give directions to the {selectedQuestion.studentA.target}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="mt-12 text-center">
+                                <button 
+                                    onClick={handleBack}
+                                    className="bg-slate-800 hover:bg-slate-700 text-white px-8 py-3 rounded-xl font-bold text-lg shadow-lg transition-transform hover:scale-105"
+                                >
+                                    ← Back to Menu
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
