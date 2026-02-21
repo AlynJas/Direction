@@ -16,11 +16,34 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Prompt:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet" />  
+
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-color: #e0f2fe;
+            background-image: url('asset/imgDirection/่Asking.png');
+            
+            background-size: cover;
+            background-position: center bottom;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            overflow-x: hidden;
+            margin: 0;
+        }
+
+        .bg-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255, 255, 255, 0.4); /* ปรับให้พื้นหลังสว่างขึ้นนิดหน่อย เพื่อให้อ่านตัวหนังสือชัด */
+            z-index: 0;
+            pointer-events: none;
+        }
+    </style>
 </head>
 
 <body>
     <div id="root"></div>
-
 <script type="text/babel">
     // ข้อมูลโจทย์ทั้ง 10 ข้อ
     const situations = [
@@ -107,37 +130,29 @@
         };
 
         return (
-            <div className="min-h-screen relative flex flex-col items-center justify-center p-6 overflow-hidden">
-                
-                {/* ของตกแต่งพื้นหลัง (สวนและนก) ที่โชว์ตลอด */}
-                <div className="bird top-12 left-1/4" style={{animationDelay: '0s'}}>🕊️</div>
-                <div className="bird top-24 right-1/4" style={{animationDelay: '1s'}}>🕊️</div>
-                
-                {/* ฐานสวนด้านล่าง */}
-                <div className="garden-decor">
-                    <span style={{fontSize: '6rem'}}>🌳</span>
-                    <span style={{fontSize: '4rem', marginBottom: '1rem'}}>🌺</span>
-                    <span style={{fontSize: '5rem'}}>🪴</span>
-                    <span style={{fontSize: '7rem', zIndex: 1}}>⛲</span>
-                    <span style={{fontSize: '4rem', marginBottom: '2rem'}}>🌿</span>
-                    <span style={{fontSize: '6rem'}}>🌸</span>
-                    <span style={{fontSize: '8rem'}}>🌳</span>
-                </div>
-
-                {/* 1. หน้าแรก (Start Screen) */}
+            <div className="min-h-screen relative flex flex-col items-center justify-center p-4 z-10 pb-[140px]">
                 {currentScreen === 'start' && (
-                    <div className="z-10 text-center fade-in mt-[-10vh]">
-                        <h1 className="title-font text-6xl md:text-8xl lg:text-[7rem] font-extrabold text-black mb-12 leading-[1.1]">
-                            Asking and<br/>Giving Direction
-                        </h1>
-                        <button onClick={handleStart} className="start-button mt-4"> START </button>
-                    </div>
-                )}
+                        <>
+                            <img src="asset/imgDirection/16.png" alt="Decoration" className="relative bird-decor top-18 right-[3%] md:right-[23%] opacity-80" style={{animationDelay: '0s', width: '90px'}} />
+                            <img src="asset/imgDirection/17.png" alt="Decoration" className="relative bird-decor top-22 left-[8%] md:left-[28%] opacity-80" style={{animationDelay: '1s', width: '110px'}} />
+                        </>
+                    )}
+                {/* --- หน้าแรก (Start Screen) --- */}
+                    {currentScreen === 'start' && (
+                        <div className="text-center fade-in mt-[-25vh]">
+                            <h1 className="title-font text-[5rem] md:text-[7rem] font-bold text-black leading-[1.05] mb-8" style={{ textShadow: "2px 2px 10px rgba(255,255,255,0.8)" }}>
+                                Asking and<br/>Giving Direction
+                            </h1><br/>
+                            <button onClick={handleStart} className="start-button">
+                                START
+                            </button>
+                        </div>
+                    )}
 
                 {/* 2. หน้าเมนูเลือกข้อ (Menu Screen) */}
                 {currentScreen === 'menu' && (
                     <div className="z-10 max-w-5xl w-full text-center fade-in mt-[-5vh]">
-                        <div className="bg-white/60 backdrop-blur-md py-6 px-4 rounded-3xl mb-8 shadow-sm inline-block">
+                        <div className="bg-white/60 backdrop-blur-md py-6 px-4 rounded-3xl mb-8 shadow-sm inline-block"><br/>
                             <h2 className="title-font text-3xl md:text-4xl font-bold text-black leading-tight">
                                 Read the situations carefully and understand <br className="hidden md:block" />
                                 each question before answering.
@@ -176,7 +191,8 @@
                                 {selectedQuestion.id}
                             </div>
                         <br/>
-                        <div className="text-center mb-8 border-b-2 border-orange-100 pb-6">
+                        <div className="flex flex-col items-center justify-center text-center pt-2 mb-8 border-b-2 border-orange-100 pb-6">
+                            <img src="asset/imgDirection/map.png" alt="Decoration" className="mb-3 rounded-2xl" style={{width: '50%'}} />
                             <span className="inline-block bg-orange-100 text-orange-800 px-4 py-1 rounded-full text-sm font-bold tracking-wide mb-2 uppercase border border-orange-200">
                                 Pattern: {selectedQuestion.pattern}
                             </span>
@@ -190,7 +206,7 @@
                             {/* Student A */}
                             <div className="bg-blue-50/80 rounded-2xl p-6 border-2 border-blue-200 shadow-sm relative">
                                 <div className="absolute -top-4 left-6 bg-blue-500 text-white px-4 py-1 rounded-lg font-bold shadow-md">
-                                    👨‍🎓 Student A (Tourist)
+                                    👨‍🎓 Tourist
                                 </div>
                                 <div className="mt-4 text-xl md:text-2xl text-slate-800 font-medium leading-relaxed">
                                     "{selectedQuestion.studentA.text}"
@@ -219,7 +235,7 @@
                             {/* Student B */}
                             <div className="bg-green-50/80 rounded-2xl p-6 border-2 border-green-200 shadow-sm relative">
                                 <div className="absolute -top-4 left-6 bg-green-600 text-white px-4 py-1 rounded-lg font-bold shadow-md">
-                                    👩‍🌾 Student B (Local)
+                                    👩‍🌾 Local
                                 </div>
                                 <div className="mt-4 text-xl md:text-2xl text-slate-800 font-medium leading-relaxed">
                                     "{selectedQuestion.studentB.text}"
