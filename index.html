@@ -16,7 +16,7 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Prompt:wght@400;500;600&display=swap" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet" />  
+    <link href="css/styles.css" rel="stylesheet"/>  
 
     <style>
         body {
@@ -36,10 +36,109 @@
         .bg-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(255, 255, 255, 0.4); /* ปรับให้พื้นหลังสว่างขึ้นนิดหน่อย เพื่อให้อ่านตัวหนังสือชัด */
+            background: rgba(255, 255, 255, 0.4);
             z-index: 0;
             pointer-events: none;
         }
+        .title-font {
+    font-family: 'Playfair Display', serif;
+}
+
+/* สไตล์ปุ่มไม้สำหรับหน้าเลือกข้อ */
+.wood-button {
+    background-color: #fef3c7; /* สีเนื้อไม้ */
+    border: 6px solid #78350f; /* ขอบสีน้ำตาลเข้ม */
+    color: #451a03;
+    box-shadow: 0 8px 0 #451a03, 0 15px 20px rgba(0,0,0,0.2);
+    transition: all 0.15s ease;
+    position: relative;
+}
+.wood-button:active {
+    transform: translateY(8px);
+    box-shadow: 0 0px 0 #451a03, 0 5px 10px rgba(0,0,0,0.2);
+}
+.wood-button:hover {
+    background-color: #fde68a;
+}
+
+/* หมุดติดปุ่มไม้ */
+.pin {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle at 30% 30%, #9ca3af, #4b5563);
+    border-radius: 50%;
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+/* สไตล์ปุ่ม START หน้าแรก */
+.start-button {
+    background-color: #a0522d; /* สีน้ำตาล (Sienna) */
+    color: white;
+    border: 4px solid white;
+    border-radius: 9999px; /* ทรงเม็ดยา Pill */
+    padding: 0.75rem 3rem;
+    font-size: 2rem;
+    font-weight: bold;
+    box-shadow: 0 0 0 3px #a0522d, 0 10px 15px rgba(0,0,0,0.2);
+    transition: all 0.2s;
+    font-family: 'Prompt', sans-serif;
+    letter-spacing: 0.05em;
+}
+.start-button:hover {
+    background-color: #8b4513;
+    box-shadow: 0 0 0 3px #8b4513, 0 15px 25px rgba(0,0,0,0.3);
+    transform: scale(1.05);
+}
+.start-button:active {
+    transform: scale(0.95);
+}
+
+/* ตกแต่งด้วยธรรมชาติ (Emoji จำลองสวน) */
+.garden-decor {
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    font-size: 5rem;
+    z-index: 0;
+    opacity: 0.95;
+    pointer-events: none;
+    filter: drop-shadow(0px 10px 15px rgba(0,0,0,0.2));
+    white-space: nowrap;
+}
+
+.bird {
+    position: absolute;
+    font-size: 3rem;
+    animation: float 4s ease-in-out infinite;
+}
+
+.bird-decor {
+    position: absolute;
+    animation: float 4s ease-in-out infinite;
+    filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
+}
+
+/* Animations */
+.fade-in {
+    animation: fadeInScale 0.6s ease-out forwards;
+}
+@keyframes fadeInScale {
+    0% { opacity: 0; transform: scale(0.95) translateY(10px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes float {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(5deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
     </style>
 </head>
 
@@ -52,61 +151,61 @@
             id: 1,
             pattern: "How do I get to...?",
             studentA: { start: "Hospital", target: "Cinema", text: "Excuse me, how do I get to the Cinema from the Hospital?" },
-            studentB: { text: "Excuse me, how do I get to the Cinema from the Hospital?" }
+            studentB: { start: "Police Station", target: "Bank", text: "Could you tell me the way to the Bank from the Police Station, please?"}
         },
         {
             id: 2,
             pattern: "Could you tell me the way to...?",
             studentA: { start: "Book Shop", target: "Library", text: "Could you tell me the way to the Library from the Book Shop, please?" },
-            studentB: { text: "Excuse me, how do I get to the Cinema from the Hospital?" }
+            studentB: { start: "Bank", target: "Museum", text: "Excuse me, how do I get to the Museum from the Bank?" }
         },
         {
             id: 3,
             pattern: "Is there a... near here?",
             studentA: { start: "School", target: "Toys shop", text: "Excuse me, is there a toys shop near here?" },
-            studentB: { text: "Excuse me, how do I get to the Cinema from the Hospital?" }
+            studentB: { start: "Airport", target: "Hotel", text: "Excuse me, is there a hotel near here?" }
         },
         {
             id: 4,
             pattern: "How do I get to...?",
             studentA: { start: "Train Station", target: "Restaurant", text: "Excuse me, how do I get to the Restaurant from the Train Station?" },
-            studentB: { text: "Excuse me, how do I get to the Cinema from the Hospital?" }
+            studentB: { start: "Book Shop", target: "Library", text: "Could you tell me the way to the Library from the Book Shop, please?" }
         },
         {
             id: 5,
             pattern: "Could you tell me the way to...?",
             studentA: { start: "Police Station", target: "Bank", text: "Could you tell me the way to the Bank from the Police Station, please?" },
-            studentB: { text: "Excuse me, how do I get to the Cinema from the Hospital?" }
+            studentB: { start: "Restaurant", target: "Eiffel Tower", text: "Excuse me, how do I get to the Eiffel Tower from the Restaurant?" }
         },
         {
             id: 6,
             pattern: "Is there a... near here?",
             studentA: { start: "Shopping Mall", target: "Coffee shop", text: "Excuse me, is there a coffee shop near here?" },
-            studentB: { text: "Excuse me, how do I get to the Cinema from the Hospital?" }
+            studentB: { start: "Book Shop", target: "Library", text: "Could you tell me the way to the Library from the Book Shop, please?" }
         },
         {
             id: 7,
             pattern: "How do I get to...?",
             studentA: { start: "Bank", target: "Museum", text: "Excuse me, how do I get to the Museum from the Bank?" },
-            studentB: { text: "Excuse me, how do I get to the Cinema from the Hospital?" }
+            studentB: { start: "School", target: "Toys shop", text: "Excuse me, is there a toys shop near here?" }
         },
         {
             id: 8,
             pattern: "Could you tell me the way to...?",
             studentA: { start: "Petshop", target: "Pizza shop", text: "Could you tell me the way to the Pizza shop from the Petshop, please?" },
-            studentB: { text: "Excuse me, how do I get to the Cinema from the Hospital?" }
+            studentB: { start: "Restaurant", target: "Eiffel Tower", text: "Excuse me, how do I get to the Eiffel Tower from the Restaurant?" }
         },
         {
             id: 9,
             pattern: "Is there a... near here?",
             studentA: { start: "Airport", target: "Hotel", text: "Excuse me, is there a hotel near here?" },
-            studentB: { text: "Excuse me, how do I get to the Cinema from the Hospital?" }
+            studentB: { start: "Restaurant", target: "Eiffel Tower", text: "Excuse me, how do I get to the Eiffel Tower from the Restaurant?" }
         },
         {
             id: 10,
             pattern: "How do I get to...?",
             studentA: { start: "Restaurant", target: "Eiffel Tower", text: "Excuse me, how do I get to the Eiffel Tower from the Restaurant?" },
-            studentB: { text: "Excuse me, how do I get to the Cinema from the Hospital?" }
+            studentB: { start: "Police Station", target: "Bank", text: "Could you tell me the way to the Bank from the Police Station, please?"}
         }
     ];
 
@@ -227,9 +326,9 @@
                                 Pattern: {selectedQuestion.pattern}
                             </span>
                             <h2 className="text-2xl font-bold text-slate-700 mt-2">
-                                Start: <span className="text-blue-600">{selectedQuestion.studentA.start}</span> 
+                                Start: <span className="text-blue-600">{selectedQuestion.studentB.start}</span> 
                                 <span className="mx-3 text-slate-400">➔</span> 
-                                Target: <span className="text-green-600">{selectedQuestion.studentA.target}</span>
+                                Target: <span className="text-green-600">{selectedQuestion.studentB.target}</span>
                             </h2>
                         </div>
                         <div className="flex flex-col gap-10 w-full">
@@ -242,7 +341,7 @@
                                     "{selectedQuestion.studentB.text}"
                                 </div>
                                 <p className="text-sm text-green-700 mt-4 font-semibold bg-green-100 inline-block px-3 py-1 rounded-full">
-                                    🎯 Target is the {selectedQuestion.studentA.target}
+                                    🎯 Target is the {selectedQuestion.studentB.target}
                                 </p>
                             </div>
                         </div>
@@ -266,5 +365,3 @@
 </script>
 </body>
 </html>
-
-
