@@ -149,61 +149,71 @@
     const situations = [
         {
             id: 1,
-            pattern: "How do I get to...?",
+            pattern1: "How do I get to...?",
+            pattern2: "Could you tell me the way to...?",
             studentA: { start: "Hospital", target: "Cinema", text: "Excuse me, how do I get to the Cinema from the Hospital?" },
             studentB: { start: "Police Station", target: "Bank", text: "Could you tell me the way to the Bank from the Police Station, please?"}
         },
         {
             id: 2,
-            pattern: "Could you tell me the way to...?",
+            pattern1: "Could you tell me the way to...?",
+            pattern2: "How do I get to...?",
             studentA: { start: "Book Shop", target: "Library", text: "Could you tell me the way to the Library from the Book Shop, please?" },
             studentB: { start: "Bank", target: "Museum", text: "Excuse me, how do I get to the Museum from the Bank?" }
         },
         {
             id: 3,
-            pattern: "Is there a... near here?",
+            pattern1: "Is there a... near here?",
+            pattern2: "Is there a... near here?",
             studentA: { start: "School", target: "Toys shop", text: "Excuse me, is there a toys shop near here?" },
             studentB: { start: "Airport", target: "Hotel", text: "Excuse me, is there a hotel near here?" }
         },
         {
             id: 4,
-            pattern: "How do I get to...?",
+            pattern1: "How do I get to...?",
+            pattern2: "Could you tell me the way to...?",
             studentA: { start: "Train Station", target: "Restaurant", text: "Excuse me, how do I get to the Restaurant from the Train Station?" },
             studentB: { start: "Book Shop", target: "Library", text: "Could you tell me the way to the Library from the Book Shop, please?" }
         },
         {
             id: 5,
-            pattern: "Could you tell me the way to...?",
+            pattern1: "Could you tell me the way to...?",
+            pattern2: "How do I get to...?",
             studentA: { start: "Police Station", target: "Bank", text: "Could you tell me the way to the Bank from the Police Station, please?" },
             studentB: { start: "Restaurant", target: "Eiffel Tower", text: "Excuse me, how do I get to the Eiffel Tower from the Restaurant?" }
         },
         {
             id: 6,
-            pattern: "Is there a... near here?",
+            pattern1: "Is there a... near here?",
+            pattern2: "Could you tell me the way to...?",
             studentA: { start: "Shopping Mall", target: "Coffee shop", text: "Excuse me, is there a coffee shop near here?" },
             studentB: { start: "Book Shop", target: "Library", text: "Could you tell me the way to the Library from the Book Shop, please?" }
         },
         {
             id: 7,
-            pattern: "How do I get to...?",
+            pattern1: "How do I get to...?",
+            pattern2: "Is there a... near here?",
             studentA: { start: "Bank", target: "Museum", text: "Excuse me, how do I get to the Museum from the Bank?" },
             studentB: { start: "School", target: "Toys shop", text: "Excuse me, is there a toys shop near here?" }
         },
         {
             id: 8,
-            pattern: "Could you tell me the way to...?",
+            pattern1: "Could you tell me the way to...?",
+            pattern2: "How do I get to...?",
             studentA: { start: "Petshop", target: "Pizza shop", text: "Could you tell me the way to the Pizza shop from the Petshop, please?" },
             studentB: { start: "Restaurant", target: "Eiffel Tower", text: "Excuse me, how do I get to the Eiffel Tower from the Restaurant?" }
         },
         {
             id: 9,
-            pattern: "Is there a... near here?",
+            pattern1: "Is there a... near here?",
+            pattern2: "How do I get to...?",
             studentA: { start: "Airport", target: "Hotel", text: "Excuse me, is there a hotel near here?" },
             studentB: { start: "Restaurant", target: "Eiffel Tower", text: "Excuse me, how do I get to the Eiffel Tower from the Restaurant?" }
         },
         {
             id: 10,
-            pattern: "How do I get to...?",
+            pattern1: "How do I get to...?",
+            pattern2: "Could you tell me the way to...?",
             studentA: { start: "Restaurant", target: "Eiffel Tower", text: "Excuse me, how do I get to the Eiffel Tower from the Restaurant?" },
             studentB: { start: "Police Station", target: "Bank", text: "Could you tell me the way to the Bank from the Police Station, please?"}
         }
@@ -294,7 +304,7 @@
                         <div className="flex flex-col items-center justify-center text-center pt-2 mb-8 border-b-2 border-orange-100 pb-6">
                             <img src="asset/imgDirection/map.png" alt="Decoration" className="mb-3 rounded-2xl" style={{width: '50%'}} />
                             <span className="inline-block bg-orange-100 text-orange-800 px-4 py-1 rounded-full text-sm font-bold tracking-wide mb-2 uppercase border border-orange-200">
-                                Pattern: {selectedQuestion.pattern}
+                                Pattern: {selectedQuestion.pattern1}
                             </span>
                             <h2 className="text-2xl font-bold text-slate-700 mt-2">
                                 Start: <span className="text-blue-600">{selectedQuestion.studentA.start}</span> 
@@ -323,7 +333,7 @@
                         <div className="grid md:grid-cols-2 gap-8"></div>
                         <div className="text-center mb-8 border-b-2 border-orange-100 pb-6">
                             <span className="inline-block bg-orange-100 text-orange-800 px-4 py-1 rounded-full text-sm font-bold tracking-wide mb-2 uppercase border border-orange-200">
-                                Pattern: {selectedQuestion.pattern}
+                                Pattern: {selectedQuestion.pattern2}
                             </span>
                             <h2 className="text-2xl font-bold text-slate-700 mt-2">
                                 Start: <span className="text-blue-600">{selectedQuestion.studentB.start}</span> 
